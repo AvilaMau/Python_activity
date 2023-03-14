@@ -63,11 +63,12 @@ with open('Analysis/election_data.txt',"w") as file:
         candidatepct = round((votes/totalvotes)*100, 3)
         voter_OP = f"{candidate_name} : {candidatepct}% ({votes}) \n"
         print(voter_OP, end = "")
+        file.write(voter_OP)
     print("---------------------------------")
     print("Winner: ",winner)
     print("---------------------------------")
     #with open('Analysis/election_data.txt',"w") as file:
-    file.write(voter_OP)
+    # file.write(voter_OP)
 
 
     
