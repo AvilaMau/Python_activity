@@ -47,7 +47,7 @@ with open('Resources/election_data.csv') as csv_file:
 
          
         
-with open('Analysis/election_data.txt',"w", newline = '') as analysis:
+with open('Analysis/election_data.txt',"w") as file:
 
     # calculate total number of votes and total votes per candidate
     # calculate percentage of votes per candidate
@@ -66,12 +66,9 @@ with open('Analysis/election_data.txt',"w", newline = '') as analysis:
     print("---------------------------------")
     print("Winner: ",winner)
     print("---------------------------------")
-    writer = csv.writer(analysis)
-    analysis.writer:(voter_OP)
+    #with open('Analysis/election_data.txt',"w") as file:
+    file.write(voter_OP)
 
 
-
-
-
-
-
+    
+#csv.writer('Analysis/election_data.txt')
