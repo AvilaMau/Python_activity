@@ -16,6 +16,7 @@ import csv
 
 totalvotes = 0
 candidate_list = []
+candidate_votes = {}
 candidate = ""
 percentageofvotespercandidate = 0
 totalvotespercandidate = 0
@@ -32,56 +33,45 @@ with open('Resources/election_data.csv') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     header = next(csv_reader)
 
-        
-    for row in csv_reader:   
+    # pull and calculate the names and votes data from the source    
+    for row in csv_reader: 
         totalvotes += 1
-         
-        if str(row[2]) == 'Charles Casper Stockham':
-            candidate1 += 1
-        elif str (row[2]) == 'Diana DeGette':
-            candidate2 += 1
-        else:
-            candidate3 += 1 
 
-        candidate1pct = round((candidate1/totalvotes)*100, 3)
-        candidate2pct = round((candidate2/totalvotes)*100, 3)
-        candidate3pct = round((candidate3/totalvotes)*100, 3)
-
-
-    result = {"Charles Casper Stockham":candidate1,"Diana DeGette":candidate2,"Ramon Anthony Doane":candidate3}
-    winner = max (result,key=result.get)
-
-
-with open('Resources/election_data.csv') as csv_file:
-    csv_reader = csv.reader(csv_file, delimiter=',')
-    header = next(csv_reader)
-
-    for row in csv_reader:
-        candidate_list = []
         candidate = row[2]
+
         if candidate not in candidate_list:
             candidate_list.append(candidate)
+            candidate_votes[candidate] = 0
+
+        candidate_votes[candidate]  += 1
+
+         
+        
+with open('Analysis/election_data.txt',"w", newline = '') as analysis:
+
+    # calculate total number of votes and total votes per candidate
+    # calculate percentage of votes per candidate
+    result = candidate_votes
+    # identify winner
+    winner = max (result,key=result.get)
+    print("Election Results")
+    print("---------------------------------")
+    print("Total Votes: ",totalvotes)
+    print("---------------------------------")
+    for candidate_name in candidate_votes:
+        votes = candidate_votes[candidate_name]
+        candidatepct = round((votes/totalvotes)*100, 3)
+        voter_OP = f"{candidate_name} : {candidatepct}% ({votes}) \n"
+        print(voter_OP, end = "")
+    print("---------------------------------")
+    print("Winner: ",winner)
+    print("---------------------------------")
+    writer = csv.writer(analysis)
+    analysis.writer:(voter_OP)
 
 
 
 
-print (candidate_list)
 
-output = f"""
-Election Results
--------------------------
-Total Votes: {totalvotes}
--------------------------
-Charles Casper Stockham: {candidate1pct}% ({candidate1})
-Diana DeGette: {candidate2pct}% ({candidate2})
-Raymon Anthony Doane: {candidate3pct}% ({candidate3})
--------------------------
-Winner: {winner}
--------------------------
-"""
-print(output)
-
-with open('Analysis/election_data.text',"w") as analysis_file:
-    analysis_file.write(output)
 
 
